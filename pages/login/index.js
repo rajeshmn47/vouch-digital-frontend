@@ -1,7 +1,7 @@
 import Head from "next/head";
 import Image from "next/image";
 import styled from "@emotion/styled";
-import styles from "../styles/Home.module.css";
+import styles from "../../styles/Home.module.css";
 
 export default function Home() {
   return (
@@ -11,10 +11,12 @@ export default function Home() {
 
         <Login>
           <Welcome>Welcome</Welcome>
-          <Input alt="" type="text" />
-          <Input alt="" type="text" />
-          <Input alt="" type="text" />
-          <InputSubmit alt="" type="submit" />
+          <p style={{ fontSize: "12px", color: "#686687" }}>
+            Enter your Username and Passoword
+          </p>
+          <Input alt="" type="text" placeholder="Username" />
+          <Input alt="" type="text" placeholder="Password" />
+          <InputSubmit alt="" type="submit" value="Login" />
         </Login>
         <Terms
           style={{
@@ -135,7 +137,6 @@ const Input = styled.input`
   order: 0;
   align-self: stretch;
   flex-grow: 0;
-  margin: 5px 0;
 `;
 const InputSubmit = styled.input`
   /* Auto layout */
@@ -164,9 +165,10 @@ const InputSubmit = styled.input`
 
 const Login = styled.div`
   display: flex;
-  justify-content: center;
+  justify-content: space-evenly;
   width: 85%;
   flex-direction: column;
   align-items: center;
+  height: 300px;
 `;
 const Terms = styled.div``;

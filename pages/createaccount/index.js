@@ -1,7 +1,7 @@
 import Head from "next/head";
 import Image from "next/image";
 import styled from "@emotion/styled";
-import styles from "../styles/Home.module.css";
+import styles from "../../styles/Home.module.css";
 
 export default function Home() {
   return (
@@ -11,10 +11,10 @@ export default function Home() {
 
         <Login>
           <Welcome>Welcome</Welcome>
-          <Input alt="" type="text" />
-          <Input alt="" type="text" />
-          <Input alt="" type="text" />
-          <InputSubmit alt="" type="submit" />
+          <Input alt="" type="text" placeholder="username" />
+          <Input alt="" type="text" placeholder="email" />
+          <Input alt="" type="text" placeholder="password" />
+          <InputSubmit alt="" type="submit" value="Create Account" />
         </Login>
         <Terms
           style={{
