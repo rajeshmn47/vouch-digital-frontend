@@ -143,7 +143,7 @@ setIsRefreshing(true)
             <tbody>
               {clients &&
                 clients.map((c) => (
-                  <tr>
+                  <tr key={c._id}>
                     <Td>
                       <img
                         src={`https://vouch-digital-backend.herokuapp.com/images/${c.image}`}
@@ -176,7 +176,6 @@ setIsRefreshing(true)
                         setCurrentitem={setCurrentitem}
                         row={c}
                         id={c._id}
-                        row={c}
                         refreshData={refreshData}
                       />
                       <Edit
