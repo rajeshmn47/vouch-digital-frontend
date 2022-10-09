@@ -149,6 +149,8 @@ setIsRefreshing(true)
                         src={`https://vouch-digital-backend.herokuapp.com/images/${c.image}`}
                         alt=""
                         width="40"
+                        height='40'
+                        style={{borderRadius:'50%'}}
                       />
                       {c.company}
                     </Td>
