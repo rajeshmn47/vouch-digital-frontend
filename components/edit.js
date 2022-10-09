@@ -48,13 +48,13 @@ function Edit({ dialogOpen, setDialogOpen, currentitem,refreshData }) {
       newPost.image = fileName;
       console.log(newPost);
       try {
-        const f=await axios.post("http://127.0.0.1:9000/client/upload", data);
+        const f=await axios.post("https://vouch-digital-backend.herokuapp.com/client/upload", data);
      
    
       } catch (err) {}
     }
     try {
-      await axios.post("http://127.0.0.1:9000/client/editclient", newPost);
+      await axios.post("https://vouch-digital-backend.herokuapp.com/client/editclient", newPost);
       setDialogOpen(false)
       refreshData()
     } catch (err) {}

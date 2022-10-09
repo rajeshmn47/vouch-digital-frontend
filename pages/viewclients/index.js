@@ -26,13 +26,13 @@ export default function Home({ clients }) {
   const handleDelete = async (id) => {
     console.log("sharif", id);
     const data = await axios.get(
-      `http://127.0.0.1:9000/client/deleteclient/${id}`
+      `https://vouch-digital-backend.herokuapp.com/client/deleteclient/${id}`
     );
     refreshData()
   };
   const handleEdit = async (d) => {
     console.log("sharif", id);
-    const data = await axios.post(`http://127.0.0.1:9000/client/editclient`, {
+    const data = await axios.post(`https://vouch-digital-backend.herokuapp.com/client/editclient`, {
       d,
     });
   };
@@ -146,7 +146,7 @@ setIsRefreshing(true)
                   <tr>
                     <Td>
                       <img
-                        src={`http://127.0.0.1:9000/images/${c.image}`}
+                        src={`https://vouch-digital-backend.herokuapp.com/images/${c.image}`}
                         alt=""
                         width="40"
                       />
@@ -533,7 +533,7 @@ const PaginationContainer = styled.div`
 `;
 export async function getServerSideProps() {
   const clients = await fetch(
-    "http://127.0.0.1:9000/client/getallclients"
+    "https://vouch-digital-backend.herokuapp.com/client/getallclients"
   ).then((res) => res.json());
   console.log(clients, "i am raj");
   return {

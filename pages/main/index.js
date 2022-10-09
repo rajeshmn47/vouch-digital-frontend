@@ -37,11 +37,11 @@ export default function Home() {
       newPost.image = fileName;
       console.log(newPost);
       try {
-        await axios.post("http://127.0.0.1:9000/client/upload", data);
+        await axios.post("https://vouch-digital-backend.herokuapp.com/client/upload", data);
       } catch (err) {}
     }
     try {
-      await axios.post("http://127.0.0.1:9000/client/createclient", newPost);
+      await axios.post("https://vouch-digital-backend.herokuapp.com/client/createclient", newPost);
       router.push("/viewclients");
     } catch (err) {}
   };
