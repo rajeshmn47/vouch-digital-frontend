@@ -1,13 +1,45 @@
+import { useState, useEffect, useRef } from "react";
 import Head from "next/head";
 import Image from "next/image";
 import styled from "@emotion/styled";
 import { Grid, Button } from "@mui/material";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import LogoutIcon from "@mui/icons-material/Logout";
+import axios from "axios";
+import { useRouter } from "next/router";
 import styles from "../../styles/Home.module.css";
+import Pagination from "../../components/pagination";
+import Menu from "../../components/menu";
+import Edit from "../../components/edit";
 
 export default function Home({ clients }) {
   console.log(clients, "ia m rayshy");
+  const router =useRouter()
+  const[isRefreshing,setIsRefreshing] =useState(false)
+  const [menuopen, setMenuopen] = useState(false);
+  const [dialogOpen, setDialogOpen] = useState(false);
+  const [currentitem, setCurrentitem] = useState(null);
+  const anchorRef = useRef(null);
+  const handleVertClick = () => {
+    setMenuopen(true);
+  };
+  const handleDelete = async (id) => {
+    console.log("sharif", id);
+    const data = await axios.get(
+      `http://127.0.0.1:9000/client/deleteclient/${id}`
+    );
+    refreshData()
+  };
+  const handleEdit = async (d) => {
+    console.log("sharif", id);
+    const data = await axios.post(`http://127.0.0.1:9000/client/editclient`, {
+      d,
+    });
+  };
+  const refreshData=()=>{
+router.replace(router.asPath)
+setIsRefreshing(true)
+  }
   return (
     <Container>
       <LoginContainer>
@@ -90,7 +122,7 @@ export default function Home({ clients }) {
                 lg={3}
                 style={{ display: "flex", alignItems: "center" }}
               >
-                <LeftInput placeholder="Search" />
+                <RightInput placeholder="Search" />
               </Grid>
             </Grid>
           </SortingNew>
@@ -114,7 +146,7 @@ export default function Home({ clients }) {
                   <tr>
                     <Td>
                       <img
-                        src={`http://127.0.0.1:9000/${c.image}`}
+                        src={`http://127.0.0.1:9000/images/${c.image}`}
                         alt=""
                         width="40"
                       />
@@ -128,12 +160,37 @@ export default function Home({ clients }) {
                     <td>--</td>
                     <td>--</td>
                     <td>
-                      <MoreVertIcon />
+                      <MoreVertIcon
+                        onClick={() => handleVertClick()}
+                        ref={anchorRef}
+                      />
+                      <Menu
+                        menuopen={menuopen}
+                        setMenuopen={setMenuopen}
+                        anchorRef={anchorRef}
+                        handleDelete={handleDelete}
+                        handleEdit={handleEdit}
+                        setDialogOpen={setDialogOpen}
+                        setCurrentitem={setCurrentitem}
+                        row={c}
+                        id={c._id}
+                        row={c}
+                        refreshData={refreshData}
+                      />
+                      <Edit
+                        dialogOpen={dialogOpen}
+                        setDialogOpen={setDialogOpen}
+                        currentitem={currentitem}
+                        refreshData={refreshData}
+                      />
                     </td>
                   </tr>
                 ))}
             </tbody>
           </Table>
+          <PaginationContainer>
+            <Pagination />
+          </PaginationContainer>
         </TableContainer>
       </Assets>
     </Container>
@@ -153,6 +210,9 @@ const LoginContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+  position: fixed;
+  left: 0;
+  top: 0;
   justify-content: space-between;
   padding: 10px 10px;
   height: 100vh;
@@ -160,6 +220,7 @@ const LoginContainer = styled.div`
 `;
 
 const Assets = styled.div`
+  margin-left: 18%;
   width: 82%;
   height: auto;
   color: #ffffff;
@@ -309,6 +370,29 @@ const CheckboxContainer = styled.div`
   width: 280px;
   margin-top: 10px;
 `;
+const RightInput = styled.input`
+  /* Auto layout */
+
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 12px 16px;
+  gap: 8px;
+
+  /* White */
+
+  background: #ffffff;
+  /* Grey/Light/100% */
+
+  border: 1px solid #e6e6e6;
+  border-radius: 24px;
+  outline: none;
+  /* Inside auto layout */
+  flex: none;
+  order: 0;
+  align-self: stretch;
+  flex-grow: 0;
+`;
 
 const LeftInput = styled.input`
   /* Auto layout */
@@ -326,12 +410,13 @@ const LeftInput = styled.input`
 
   border: 1px solid #e6e6e6;
   border-radius: 24px;
-
+  margin-top: 10px;
   /* Inside auto layout */
   flex: none;
   order: 0;
   align-self: stretch;
   flex-grow: 0;
+  outline: none;
 `;
 
 const AddClient = styled.input`
@@ -394,8 +479,6 @@ const SortingNew = styled.div`
 
   background: #ffffff;
   /* Card Shadow/01 */
-
-
 `;
 
 const ButtonReset = styled.button`
@@ -409,7 +492,7 @@ const Table = styled.table`
   width: 100%;
   border-collapse: collapse;
   padding: 16px;
-border-radius: 8px;
+  border-radius: 8px;
   th {
     color: #030037;
     text-align: center;
@@ -421,13 +504,13 @@ border-radius: 8px;
     color: #030037;
     text-align: center;
     font-size: 14px;
+    padding: 5px 0;
   }
   thead {
     background: #f8f9fd;
-  
   }
   tr {
-    border: 1px solid #F8F9FD;
+    border: 1px solid #f8f9fd;
   }
 `;
 const Td = styled.td`
@@ -435,14 +518,18 @@ const Td = styled.td`
   align-items: center;
   justify-content: center;
   img {
-    margin-right: 5px;
+    margin-right: 10px;
   }
+  overflow: hidden;
 `;
 const TableContainer = styled.div`
   background-color: #ffffff;
   width: 100%;
   box-shadow: 0px 1px 5px rgba(3, 0, 55, 0.08);
-border-radius: 8px;
+  border-radius: 8px;
+`;
+const PaginationContainer = styled.div`
+  padding: 10px 0px;
 `;
 export async function getServerSideProps() {
   const clients = await fetch(

@@ -6,12 +6,14 @@ import { Grid } from "@mui/material";
 import axios from "axios";
 import LogoutIcon from "@mui/icons-material/Logout";
 import { useDispatch, useSelector } from "react-redux";
+import { useRouter } from "next/router";
 import styles from "../../styles/Home.module.css";
 
 export default function Home() {
   const { user, isAuthenticated, loading, error } = useSelector(
     (state) => state.user
   );
+  const router =useRouter()
   const [companyName, setCompanyName] = useState("");
   const [email, setEmail] = useState("");
   const [phoneNo, setPhoneNo] = useState("");
@@ -40,7 +42,7 @@ export default function Home() {
     }
     try {
       await axios.post("http://127.0.0.1:9000/client/createclient", newPost);
-      window.location.reload();
+      router.push("/viewclients");
     } catch (err) {}
   };
 
