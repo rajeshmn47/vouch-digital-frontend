@@ -13,7 +13,7 @@ export default function Home() {
   const { user, isAuthenticated, loading, error } = useSelector(
     (state) => state.user
   );
-  const router =useRouter()
+  const router = useRouter();
   const [companyName, setCompanyName] = useState("");
   const [email, setEmail] = useState("");
   const [phoneNo, setPhoneNo] = useState("");
@@ -37,11 +37,17 @@ export default function Home() {
       newPost.image = fileName;
       console.log(newPost);
       try {
-        await axios.post("https://vouch-digital-backend.herokuapp.com/client/upload", data);
+        await axios.post(
+          "https://vouch-digital-backend.herokuapp.com/client/upload",
+          data
+        );
       } catch (err) {}
     }
     try {
-      await axios.post("https://vouch-digital-backend.herokuapp.com/client/createclient", newPost);
+      await axios.post(
+        "https://vouch-digital-backend.herokuapp.com/client/createclient",
+        newPost
+      );
       router.push("/viewclients");
     } catch (err) {}
   };

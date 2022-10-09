@@ -14,8 +14,8 @@ import Edit from "../../components/edit";
 
 export default function Home({ clients }) {
   console.log(clients, "ia m rayshy");
-  const router =useRouter()
-  const[isRefreshing,setIsRefreshing] =useState(false)
+  const router = useRouter();
+  const [isRefreshing, setIsRefreshing] = useState(false);
   const [menuopen, setMenuopen] = useState(false);
   const [dialogOpen, setDialogOpen] = useState(false);
   const [currentitem, setCurrentitem] = useState(null);
@@ -28,18 +28,21 @@ export default function Home({ clients }) {
     const data = await axios.get(
       `https://vouch-digital-backend.herokuapp.com/client/deleteclient/${id}`
     );
-    refreshData()
+    refreshData();
   };
   const handleEdit = async (d) => {
     console.log("sharif", id);
-    const data = await axios.post(`https://vouch-digital-backend.herokuapp.com/client/editclient`, {
-      d,
-    });
+    const data = await axios.post(
+      `https://vouch-digital-backend.herokuapp.com/client/editclient`,
+      {
+        d,
+      }
+    );
   };
-  const refreshData=()=>{
-router.replace(router.asPath)
-setIsRefreshing(true)
-  }
+  const refreshData = () => {
+    router.replace(router.asPath);
+    setIsRefreshing(true);
+  };
   return (
     <Container>
       <LoginContainer>
@@ -149,8 +152,8 @@ setIsRefreshing(true)
                         src={`https://vouch-digital-backend.herokuapp.com/images/${c.image}`}
                         alt=""
                         width="40"
-                        height='40'
-                        style={{borderRadius:'50%'}}
+                        height="40"
+                        style={{ borderRadius: "50%" }}
                       />
                       {c.company}
                     </Td>

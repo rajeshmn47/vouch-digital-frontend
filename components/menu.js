@@ -18,7 +18,7 @@ function Menu({
   setDialogOpen,
   row,
   setCurrentitem,
-  refreshData
+  refreshData,
 }) {
   const handleClose = () => {
     setMenuopen(false);

@@ -25,7 +25,7 @@ export default function Home() {
       setNotification(true);
       router.push("/main");
     }
-  }, [isAuthenticated, dispatch, user,router]);
+  }, [isAuthenticated, dispatch, user, router]);
   useEffect(() => {
     setTimeout(() => {
       setNotification(false);

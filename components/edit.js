@@ -7,7 +7,7 @@ import DialogTitle from "@mui/material/DialogTitle";
 import Dialog from "@mui/material/Dialog";
 import { useDispatch, useSelector } from "react-redux";
 
-function Edit({ dialogOpen, setDialogOpen, currentitem,refreshData }) {
+function Edit({ dialogOpen, setDialogOpen, currentitem, refreshData }) {
   const { user, isAuthenticated, loading, error } = useSelector(
     (state) => state.user
   );
@@ -39,7 +39,7 @@ function Edit({ dialogOpen, setDialogOpen, currentitem,refreshData }) {
       name: user?.username,
       id: currentitem._id,
     };
-    console.log('dsatyu')
+    console.log("dsatyu");
     if (file) {
       const data = new FormData();
       const fileName = Date.now() + file.name;
@@ -48,15 +48,16 @@ function Edit({ dialogOpen, setDialogOpen, currentitem,refreshData }) {
       newPost.image = fileName;
       console.log(newPost);
       try {
-        const f=await axios.post("https://vouch-digital-backend.herokuapp.com/client/upload", data);
-     
-   
+        const f = await axios.post(
+          "https://vouch-digital-backend.herokuapp.com/client/upload",
+          data
+        );
       } catch (err) {}
     }
     try {
       await axios.post("https://vouch-digital-backend.herokuapp.com/client/editclient", newPost);
-      setDialogOpen(false)
-      refreshData()
+      setDialogOpen(false);
+      refreshData();
     } catch (err) {}
   };
 
@@ -88,6 +89,7 @@ function Edit({ dialogOpen, setDialogOpen, currentitem,refreshData }) {
               id="file"
               accept=".png,.jpeg,.jpg"
               onChange={(e) => setFile(e.target.files[0])}
+              required='true'
             />
           </Grid>
           <Grid item xs={12} lg={6}>
