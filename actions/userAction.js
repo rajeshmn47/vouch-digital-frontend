@@ -19,14 +19,14 @@ export const register = (myform) => async (dispatch) => {
   try {
     console.log(myform);
     const { data } = await axios.post(
-      "https://stackoverflowclonerajesh.herokuapp.com/auth/register",
+      "https://vouch-digital-backend.herokuapp.com/auth/register",
       { myform }
     );
     console.log(data);
     localStorage.setItem("server_token", data.server_token);
     if (data.user) {
       console.log("true rajesh");
-      dispatch({ type: REGISTER_USER_SUCCESS, payload: "rahesh" });
+      dispatch({ type: REGISTER_USER_SUCCESS, payload: data });
     }
   } catch (error) {
     console.log(error.response, "asdfgh");
@@ -62,7 +62,7 @@ export const loadUser = () => async (dispatch) => {
       localStorage.getItem("server_token");
     dispatch({ type: LOAD_USER_REQUEST });
     const { data } = await axios(
-      "https://stackoverflowclonerajesh.herokuapp.com/auth/loaduser",
+      "https://vouch-digital-backend.herokuapp.com/auth/loaduser",
       {
         method: "get",
         headers: {

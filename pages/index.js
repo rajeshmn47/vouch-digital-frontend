@@ -1,9 +1,28 @@
+import { useState, useEffect } from "react";
 import Head from "next/head";
 import Image from "next/image";
 import styled from "@emotion/styled";
+import { useDispatch, useSelector } from "react-redux";
+import { useRouter } from "next/router";
 import styles from "../styles/Home.module.css";
+import { loadUser } from "../actions/userAction";
 
 export default function Home() {
+  const dispatch = useDispatch();
+  const router = useRouter();
+  const { user, isAuthenticated, loading, error } = useSelector(
+    (state) => state.user
+  );
+  useEffect(() => {
+    dispatch(loadUser());
+  }, [dispatch]);
+  useEffect(() => {
+    console.log(user, "raveena");
+    if (user && user.username) {
+      console.log("crazystaag");
+      router.push("/main");
+    }
+  }, [user]);
   return (
     <Container>
       <LoginContainer>

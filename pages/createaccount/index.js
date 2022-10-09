@@ -1,9 +1,44 @@
+import { useState, useEffect } from "react";
 import Head from "next/head";
 import Image from "next/image";
+import { useRouter } from "next/router";
+import { useDispatch, useSelector } from "react-redux";
 import styled from "@emotion/styled";
+import axios from "axios";
+import { register } from "../../actions/userAction";
 import styles from "../../styles/Home.module.css";
 
 export default function Home() {
+  const dispatch = useDispatch();
+  const router = useRouter();
+  const { user, isAuthenticated, loading, error } = useSelector(
+    (state) => state.user
+  );
+  console.log(isAuthenticated, user);
+  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [notification, setNotification] = useState(false);
+  useEffect(() => {
+    if (isAuthenticated) {
+      console.log("change be the chsnge");
+      setNotification(true);
+      router.push("/main");
+    }
+  }, [isAuthenticated, dispatch, user]);
+  useEffect(() => {
+    setTimeout(() => {
+      setNotification(false);
+    }, 2000);
+  }, [notification]);
+  const handleSubmit = async () => {
+    const registerdata = {
+      username: username,
+      email: email,
+      password: password,
+    };
+    dispatch(register(registerdata));
+  };
   return (
     <Container>
       <LoginContainer>
@@ -11,11 +46,40 @@ export default function Home() {
 
         <Login>
           <Welcome>Welcome</Welcome>
-          <Input alt="" type="text" placeholder="username" />
-          <Input alt="" type="text" placeholder="email" />
-          <Input alt="" type="text" placeholder="password" />
-          <InputSubmit alt="" type="submit" value="Create Account" />
+          <Input
+            alt=""
+            type="text"
+            placeholder="username"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+          />
+          <Input
+            alt=""
+            type="text"
+            placeholder="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
+          <Input
+            alt=""
+            type="text"
+            placeholder="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+          <InputSubmit
+            alt=""
+            type="submit"
+            value="Create Account"
+            onClick={(e) => handleSubmit(e)}
+          />
+          {notification && (
+            <h3 style={{ color: "lightblue", marginTop: "5px" }}>
+              U are Authenticated Successfully
+            </h3>
+          )}
         </Login>
+
         <Terms
           style={{
             width: "213px",
@@ -160,6 +224,7 @@ const InputSubmit = styled.input`
   flex: none;
   order: 0;
   flex-grow: 0;
+  cursor: pointer;
 `;
 
 const Login = styled.div`

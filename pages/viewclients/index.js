@@ -2,10 +2,12 @@ import Head from "next/head";
 import Image from "next/image";
 import styled from "@emotion/styled";
 import { Grid, Button } from "@mui/material";
+import MoreVertIcon from "@mui/icons-material/MoreVert";
 import LogoutIcon from "@mui/icons-material/Logout";
 import styles from "../../styles/Home.module.css";
 
-export default function Home() {
+export default function Home({ clients }) {
+  console.log(clients, "ia m rayshy");
   return (
     <Container>
       <LoginContainer>
@@ -76,17 +78,63 @@ export default function Home() {
             </Grid>
           </Grid>
         </Sorting>
-        <Sorting>
-          <Grid
-            container
-            spacing={2}
-            style={{ display: "flex", alignItems: "center" }}
-          >
-            <Grid item lg={3} style={{ display: "flex", alignItems: "center" }}>
-              <LeftInput placeholder="Search" />
+        <TableContainer>
+          <SortingNew>
+            <Grid
+              container
+              spacing={2}
+              style={{ display: "flex", alignItems: "center" }}
+            >
+              <Grid
+                item
+                lg={3}
+                style={{ display: "flex", alignItems: "center" }}
+              >
+                <LeftInput placeholder="Search" />
+              </Grid>
             </Grid>
-          </Grid>
-        </Sorting>
+          </SortingNew>
+          <Table>
+            <thead>
+              <tr>
+                <th>Company Name</th>
+                <th>Email Address</th>
+                <th>Phone No</th>
+                <th>Contact Person</th>
+                <th>Facilitator</th>
+                <th>Sites</th>
+                <th>Tenants</th>
+                <th>Tenants Groups</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {clients &&
+                clients.map((c) => (
+                  <tr>
+                    <Td>
+                      <img
+                        src={`http://127.0.0.1:9000/${c.image}`}
+                        alt=""
+                        width="40"
+                      />
+                      {c.company}
+                    </Td>
+                    <td>{c.email}</td>
+                    <td>{c.phonenumber}</td>
+                    <td>{c.name}</td>
+                    <td>--</td>
+                    <td>{c.website.length}</td>
+                    <td>--</td>
+                    <td>--</td>
+                    <td>
+                      <MoreVertIcon />
+                    </td>
+                  </tr>
+                ))}
+            </tbody>
+          </Table>
+        </TableContainer>
       </Assets>
     </Container>
   );
@@ -332,9 +380,78 @@ const Sorting = styled.div`
   box-shadow: 0px 1px 5px rgba(3, 0, 55, 0.08);
   border-radius: 12px;
 `;
+const SortingNew = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 16px;
+  gap: 16px;
+  width: 100%;
+  height: 72px;
+
+  margin: 5px 0;
+  /* White */
+
+  background: #ffffff;
+  /* Card Shadow/01 */
+
+
+`;
 
 const ButtonReset = styled.button`
   border: none;
   outline: none;
   background-color: transparent;
 `;
+
+const Table = styled.table`
+  background-color: #ffffff;
+  width: 100%;
+  border-collapse: collapse;
+  padding: 16px;
+border-radius: 8px;
+  th {
+    color: #030037;
+    text-align: center;
+    border: none;
+    font-size: 14px;
+    padding: 5px 0;
+  }
+  td {
+    color: #030037;
+    text-align: center;
+    font-size: 14px;
+  }
+  thead {
+    background: #f8f9fd;
+  
+  }
+  tr {
+    border: 1px solid #F8F9FD;
+  }
+`;
+const Td = styled.td`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  img {
+    margin-right: 5px;
+  }
+`;
+const TableContainer = styled.div`
+  background-color: #ffffff;
+  width: 100%;
+  box-shadow: 0px 1px 5px rgba(3, 0, 55, 0.08);
+border-radius: 8px;
+`;
+export async function getServerSideProps() {
+  const clients = await fetch(
+    "http://127.0.0.1:9000/client/getallclients"
+  ).then((res) => res.json());
+  console.log(clients, "i am raj");
+  return {
+    props: {
+      clients: clients.clients,
+    },
+  };
+}

@@ -5,9 +5,13 @@ import styled from "@emotion/styled";
 import { Grid } from "@mui/material";
 import axios from "axios";
 import LogoutIcon from "@mui/icons-material/Logout";
+import { useDispatch, useSelector } from "react-redux";
 import styles from "../../styles/Home.module.css";
 
 export default function Home() {
+  const { user, isAuthenticated, loading, error } = useSelector(
+    (state) => state.user
+  );
   const [companyName, setCompanyName] = useState("");
   const [email, setEmail] = useState("");
   const [phoneNo, setPhoneNo] = useState("");
@@ -21,7 +25,7 @@ export default function Home() {
       email: email,
       phonenumber: phoneNo,
       website: [website],
-      name: username,
+      name: user?.username,
     };
     if (file) {
       const data = new FormData();
@@ -31,11 +35,11 @@ export default function Home() {
       newPost.image = fileName;
       console.log(newPost);
       try {
-        await axios.post("/api/upload", data);
+        await axios.post("http://127.0.0.1:9000/client/upload", data);
       } catch (err) {}
     }
     try {
-      await axios.post("/posts", newPost);
+      await axios.post("http://127.0.0.1:9000/client/createclient", newPost);
       window.location.reload();
     } catch (err) {}
   };
@@ -74,8 +78,8 @@ export default function Home() {
         </div>
         <User>
           <div>
-            <h3>James Burton</h3>
-            <p>rajeshmn47@gmail.com</p>
+            <h3>{user?.username ? user.username : "James Burton"}</h3>
+            <p>{user?.email ? user.email : "rajeshmn47@gmail.com"}</p>
           </div>
           <Icon>
             <LogoutIcon style={{ color: "#B8BABC" }} />
@@ -186,7 +190,7 @@ export default function Home() {
               </Grid>
 
               <Grid item xs={12} lg={3}>
-                <InputSubmit value="save & continue" />
+                <InputSubmit value="save & continue" type="submit" />
               </Grid>
             </Grid>
           </Form>

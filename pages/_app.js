@@ -18,7 +18,6 @@ function MyApp({ Component, pageProps }) {
     console.log(user, "raveena");
     if (user && user.username) {
       console.log("crazystaag");
-      router.push("/");
     }
   }, [user]);
   return <Component {...pageProps} />;
