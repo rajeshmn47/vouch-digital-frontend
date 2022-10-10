@@ -99,6 +99,7 @@ function Edit({ dialogOpen, setDialogOpen, currentitem, refreshData }) {
               placeholder="Company Name *"
               value={companyName}
               onChange={(e) => setCompanyName(e.target.value)}
+              required='true'
             />
           </Grid>
           <Grid item xs={12} lg={6}>
@@ -108,6 +109,7 @@ function Edit({ dialogOpen, setDialogOpen, currentitem, refreshData }) {
               placeholder="Website"
               value={website}
               onChange={(e) => setWebsite(e.target.value)}
+              required='true'
             />
           </Grid>
 
@@ -119,6 +121,7 @@ function Edit({ dialogOpen, setDialogOpen, currentitem, refreshData }) {
               required="true"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
+              required='true'
             />
           </Grid>
           <Grid item xs={12} lg={6}>
@@ -128,6 +131,7 @@ function Edit({ dialogOpen, setDialogOpen, currentitem, refreshData }) {
               placeholder="Mobile Number *"
               value={phoneNo}
               onChange={(e) => setPhoneNo(e.target.value)}
+              required='true'
             />
           </Grid>
           <Grid item xs={12} lg={6}>

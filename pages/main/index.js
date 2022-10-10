@@ -121,12 +121,15 @@ export default function Home() {
                 >
                   Add some basic information related to the client.
                 </p>
-                <ImageInput
-                  type="file"
-                  id="file"
-                  accept=".png,.jpeg,.jpg"
-                  onChange={(e) => setFile(e.target.files[0])}
-                />
+             
+                   <input
+              type="file"
+              id="file"
+            
+              onChange={(e) => setFile(e.target.files[0])}
+              required='true'
+            />
+      
               </Grid>
               <Grid item xs={12} lg={6}>
                 <Input
