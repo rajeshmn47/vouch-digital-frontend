@@ -5,7 +5,7 @@ import { useRouter } from "next/router";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "@emotion/styled";
 import axios from "axios";
-import { register } from "../../actions/userAction";
+import { register , logout } from "../../actions/userAction";
 import styles from "../../styles/Home.module.css";
 
 export default function Home() {

@@ -8,11 +8,13 @@ import LogoutIcon from "@mui/icons-material/Logout";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/router";
 import styles from "../../styles/Home.module.css";
+import {logout} from '../../actions/userAction'
 
 export default function Home() {
   const { user, isAuthenticated, loading, error } = useSelector(
     (state) => state.user
   );
+  const dispatch = useDispatch()
   const router = useRouter();
   const [companyName, setCompanyName] = useState("");
   const [email, setEmail] = useState("");
@@ -95,7 +97,7 @@ export default function Home() {
             <p>{user?.email ? user.email : "rajeshmn47@gmail.com"}</p>
           </div>
           <Icon>
-            <LogoutIcon style={{ color: "#B8BABC" }} />
+            <LogoutIcon style={{ color: "#B8BABC" }} onClick={()=>dispatch(logout())}/>
           </Icon>
         </User>
       </LoginContainer>

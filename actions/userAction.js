@@ -42,7 +42,7 @@ export const login = (myform) => async (dispatch) => {
     console.log(myform);
     dispatch({ type: LOGIN_REQUEST });
     const { data } = await axios.post(
-      "https://stackoverflowclonerajesh.herokuapp.com/auth/login",
+      "https://vouch-digital-backend.herokuapp.com/auth/register",
       { myform }
     );
     console.log(data);
