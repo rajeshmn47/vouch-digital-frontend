@@ -121,7 +121,7 @@ function Edit({ dialogOpen, setDialogOpen, currentitem, refreshData }) {
               required="true"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              required='true'
+              
             />
           </Grid>
           <Grid item xs={12} lg={6}>
