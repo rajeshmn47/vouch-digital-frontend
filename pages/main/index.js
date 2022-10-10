@@ -44,11 +44,16 @@ export default function Home() {
       } catch (err) {}
     }
     try {
+      if(user?.username){
       await axios.post(
         "https://vouch-digital-backend.herokuapp.com/client/createclient",
         newPost
       );
       router.push("/viewclients");
+      }
+      else{
+        alert('please login or signup')
+      }
     } catch (err) {}
   };
 
